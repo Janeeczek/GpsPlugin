@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-gpsplugin",
+  "version": "0.0.1",
+  "description": "Ściągnij cały projekt pluginu z githuba https://github.com/Janeeczek/StartFromFCM_plugin/archive/refs/heads/master.zip \r Rozpakuj go",
+  "cordova": {
+    "id": "cordova-plugin-gpsplugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "ISC"
+}

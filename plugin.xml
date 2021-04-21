@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-ngps" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Netrix autostart gps plugin for cordova</name>
+    <platform name="android">
+		<js-module name="GpsPlugin" src="www/GpsPlugin.js">
+			<clobbers target="GpsPlugin" />
+		</js-module>
+		<hook type="after_plugin_install" src="scripts/apply-to-gradle.properties.js" />
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="GpsPlugin">
+                <param name="android-package" value="com.example.cordova.plugin.GpsPlugin"/>
+				<param name="onload" value="true" />
+            </feature>
+        </config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.WAKE_LOCK" />
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+			<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+			<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+		</config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+		    <receiver android:name="com.example.cordova.plugin.receiver.AutoStart" android:enabled="true" android:exported="false">
+				<intent-filter>
+					<category android:name="android.intent.category.DEFAULT"/>
+					<action android:name="android.intent.action.BOOT_COMPLETED"/>
+					<action android:name="android.intent.action.ACTION_BOOT_COMPLETED"/>
+					<action android:name="android.intent.action.REBOOT"/>
+					<action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+					<action android:name="android.intent.action.ACTION_SHUTDOWN"/>
+				</intent-filter>
+			</receiver>
+			<service
+				android:foregroundServiceType="location"
+				android:name="com.example.cordova.plugin.service.LocationService"
+				android:enabled="true"
+				android:exported="true"/>
+			
+			
+		</config-file>
+		
+		
+		
+        <source-file src="src/android/GpsPlugin.java" target-dir="src/com/example/cordova/plugin" />
+		<source-file src="src/android/receiver/AutoStart.java" target-dir="src/com/example/cordova/plugin/receiver" />
+		<source-file src="src/android/service/LocationService.java" target-dir="src/com/example/cordova/plugin/service" />
+		<resource-file src="src/android/iconsa.png" target="res/drawable/iconn.png" />
+		<framework src="com.google.android.gms:play-services-location:18.0.0" />
+    </platform>
+	
+</plugin>

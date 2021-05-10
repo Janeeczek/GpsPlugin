@@ -1,10 +1,32 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-ngps" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>Netrix autostart gps plugin for cordova</name>
+	<js-module name="GpsPlugin" src="www/GpsPlugin.js">
+		<clobbers target="GpsPlugin" />
+	</js-module>
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="GpsPlugin">
+				<param name="ios-package" value="GpsPlugin" />
+				<param name="onload" value="true" />
+			</feature>
+			<preference name="UseSwiftLanguageVersion" value="5" />
+		</config-file>
+		<config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
+			<string>Always and when in use</string>
+		</config-file>
+		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+			<string>When in use</string>
+		</config-file>
+		<config-file target="*-Info.plist" parent="UIBackgroundModes">
+			<array>
+				<string>location</string>
+			</array>
+		</config-file>
+		<source-file src="src/ios/GpsPlugin.swift" />
+	</platform>
     <platform name="android">
-		<js-module name="GpsPlugin" src="www/GpsPlugin.js">
-			<clobbers target="GpsPlugin" />
-		</js-module>
+
 		<hook type="after_plugin_install" src="scripts/apply-to-gradle.properties.js" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="GpsPlugin">
